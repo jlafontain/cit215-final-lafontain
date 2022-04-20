@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Final Project - Instrument Store</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>Instrument Store</h1>
+<div id="app">
+    <div id="store-app">
+        <div v-if="empty.length > 0">
+            <h2 class = "empty"> {{empty}}</h2>
+        </div>
+
+        <button type="submit" v-on:click="emptyCart" class="cart">Cart: {{cart.length}}</button>
+        <button type="submit" class="add" v-on:click="form">Add Instrument</button>
+
+        <div v-for="(object,index) in instruments">
+
+            <div v-bind:class="object.brand" class="instrument">
+
+                <img v-if="img=!false" v-bind:src="object.img" v-on:click="popOut(object)"></img>
+                <h2 v-if="object.img == false" class="noImage" v-on:click="popOut(object)">No Image</h2>
+
+                <h2 v-bind:class="{name:object}" v-on:click="popOut(object)">{{object.name}}</h2>
+                <button type="submit" v-on:click="addCart(object,index)" class="button">Add to Cart</button>
+
+
+            </div>
+            <div v-if="pop == true" class="popOut" v-on:click ="popOut">
+                <div v-bind:class ="{display:instrumentDisplay, instrument:instrumentDisplay}">
+                    <h2 v-if ="instrumentDisplay.img == false" class="noImg"><span style="cursor: pointer">No Image</span></h2>
+                    <img v-else v-bind:src="instrumentDisplay.img" alt="No Image Found"></img>
+
+
+                    <h2>Name: {{instrumentDisplay.name}}</h2>
+                    <h2>Type: {{instrumentDisplay.type}}</h2>
+                    <h2>Price: {{instrumentDisplay.price}}</h2>
+                    <h2>Brand: {{instrumentDisplay.brand}}</h2>
+
+                    <button type="submit" v-on:click="addCart(object, index)">Add to Cart</button>
+
+                </div>
+            </div>
+        </div>
+        <div v-if="addInstrument===true" class="form">
+            <div class="addInstrument">
+                <h2>Add Instrument</h2>
+
+                <input type="text" v-model="newName" placeholder="Instrument Name" id="instrument"/>
+
+                <input type="text" v-model="newType" placeholder="Instrument Type" id="type">
+
+                <input type="text" v-model="newPrice" placeholder="Price" id="price">
+
+                <label for="Yamaha">Yamaha
+                    <input type="radio" value="Yamaha" name="brand" v-model="newBrand" class="type"></label>
+
+
+                <label for="Fender">Fender
+                    <input type="radio" value="Fender" name="brand" v-model="newBrand" class="type"></label>
+
+
+
+                <label for="Maton">Maton
+                    <input type="radio" value="Maton" name="brand" v-model="newBrand" class="type"></label>
+
+                <button type="submit" class="button" v-on:click="newInstrument">Submit Instrument</button>
+                <button type="submit" class="exit" v-on:click="form">X</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="vue.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
